@@ -3,6 +3,7 @@ package ch.heap.bukkit.epilog;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -28,9 +29,14 @@ public class LogEvent {
 	public JSONObject toJSON() {
 		JSONObject data = new JSONObject(this.data);
 		Player p = this.player;
-		if (p!=null) {
-			data.put("player", p.getUniqueId().toString());
+		if (p != null) {
+			String player_name = p.getName();
+			if (player_name == null) {
+				player_name = "just_entered";
+			}
+			data.put("player", player_name);
 			data.put("worldUUID", p.getWorld().getUID().toString());
+
 		}
 		data.put("time", this.time);
 		data.put("event", this.eventName);
